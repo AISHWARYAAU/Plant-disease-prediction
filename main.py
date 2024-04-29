@@ -1,12 +1,18 @@
 import streamlit as st
 import tensorflow as tf
 import numpy as np
+import requests
 # from tensorflow.keras.layers import InputLayer
 
+model_url = 'https://drive.google.com/file/d/17O6WtPID3z9SQtdSXdL9GfRIEF60mg3T/view?usp=drive_link'
+model_filename = 'trained_model.keras'
+
+r = requests.get(model_url, allow_redirects=True)
+open(model_filename, 'wb').write(r.content)
 
 # Tensorflow Model Prediction
 def model_prediction(test_image):
-    model = tf.keras.models.load_model("trained_model.keras")
+    model = tf.keras.models.load_model(model_filename)
     # Define the input shape directly when creating the InputLayer
     # input_layer = InputLayer(input_shape=(128, 128, 3), dtype='float32', sparse=False, name='input_layer_1')
     image = tf.keras.preprocessing.image.load_img(test_image, target_size=(128, 128))
